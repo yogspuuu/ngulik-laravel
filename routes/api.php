@@ -19,7 +19,7 @@ Route::prefix('users')->group(function () {
 Route::prefix('articles')->group(function () {
     Route::get('/', [ArticleController::class, 'index']);
     Route::get('feed', [ArticleController::class, 'feed']);
-    Route::get('{article}', [ArticleController::class, 'show']);
+    Route::get('{article_id}', [ArticleController::class, 'show']);
 });
 
 Route::middleware('auth')->group(function () {

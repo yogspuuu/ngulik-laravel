@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Htpp\Resource\User\UserResource;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
@@ -17,12 +18,12 @@ class UserController extends Controller
         $this->user = $user;
     }
 
-    public function show(): array
+    public function show(): UserResource
     {
         return $this->userResponseJson(auth()->getToken()->get());
     }
 
-    public function store(StoreRequest $request): array
+    public function store(StoreRequest $request): UserResource
     {
         $user = $this->user->create($request->validated()['user']);
 
@@ -31,14 +32,14 @@ class UserController extends Controller
         return $this->userResponseJson(auth()->refresh());
     }
 
-    public function update(UpdateRequest $request): array
+    public function update(UpdateRequest $request): UserResource
     {
         auth()->user()->update($request->validated()['user']);
 
         return $this->userResponseJson(auth()->getToken()->get());
     }
 
-    public function login(LoginRequest $request): array
+    public function login(LoginRequest $request): UserResource
     {
         if ($token = auth()->attempt($request->validated()['user'])) {
             return $this->userResponseJson($token);
