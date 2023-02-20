@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Htpp\Resource\User\UserResource;
 use App\Http\Resources\Article\ArticleCollection;
 use App\Http\Resources\Article\ArticleResource;
 use App\Http\Resources\Comment\CommentCollection;
 use App\Http\Resources\Comment\CommentResource;
+use App\Http\Resources\Profile\ProfileResouce;
+use App\Http\Resources\Tag\TagCollection;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;
@@ -46,9 +49,21 @@ class Controller extends BaseController
         return new CommentResource($comment);
     }
 
-    public function profileResponse(User $user): array
+    public function profileResponseJson(User $user): ProfileResouce
     {
-        return ['profile' => $user->only('username', 'bio', 'image')
-            + ['following' => $this->user->doesUserFollowAnotherUser(auth()->id(), $user->id)]];
+        return new ProfileResouce($user);
+    }
+
+    public function tagResponseCollection(object $tag): TagCollection
+    {
+        return new TagCollection($tag);
+    }
+
+    protected function userResponseJson(string $jwtToken): UserResource
+    {
+        $user = auth()->user();
+        $user->token = $jwtToken;
+
+        return new UserResource($user);
     }
 }

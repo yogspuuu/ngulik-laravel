@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Profile\ProfileResouce;
 use App\Models\User;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class ProfileController extends Controller
 {
@@ -13,22 +15,22 @@ class ProfileController extends Controller
         $this->user = $user;
     }
 
-    public function show(User $user): array
+    public function show(User $user): ProfileResouce
     {
-        return $this->profileResponse($user);
+        return $this->profileResponseJson($user);
     }
 
-    public function follow(User $user): array
+    public function follow(User $user): ProfileResouce
     {
         auth()->user()->following()->attach($user->id);
 
-        return $this->profileResponse($user);
+        return $this->profileResponseJson($user);
     }
 
-    public function unfollow(User $user): array
+    public function unfollow(User $user): ProfileResouce
     {
         auth()->user()->following()->detach($user->id);
 
-        return $this->profileResponse($user);
+        return $this->profileResponseJson($user);
     }
 }

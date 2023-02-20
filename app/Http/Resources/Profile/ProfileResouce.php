@@ -11,7 +11,8 @@ class ProfileResouce extends JsonResource
     public function toArray($request)
     {
         return [
-            
+            'profile' => $this->user->only('username', 'bio', 'image'),
+            'following' => $this->user->doesUserFollowAnotherUser(auth()->id(), $this->user->id)
         ];
     }
 }

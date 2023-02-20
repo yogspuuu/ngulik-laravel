@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Tag\TagCollection;
 use App\Models\Tag;
 
 class TagController extends Controller
 {
-    public function index(Tag $tag): array
+    public function index(Tag $tag): TagCollection
     {
-        return ['tags' => $tag->pluck('name')];
+        return $this->tagResponseCollection($tag);
     }
 }
