@@ -18,7 +18,7 @@ class CommentController extends Controller
         $this->comment = $comment;
     }
 
-    public function index(Article $article): CommentCollection
+    public function list(Article $article): CommentCollection
     {
         return $this->commentResponseCollection($article->comment);
     }

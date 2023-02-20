@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class ProfileController extends Controller
 {
-    protected User $user;
+    protected $user;
 
     public function __construct(User $user)
     {

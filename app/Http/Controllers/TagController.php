@@ -7,7 +7,7 @@ use App\Models\Tag;
 
 class TagController extends Controller
 {
-    public function index(Tag $tag): TagCollection
+    public function list(Tag $tag): TagCollection
     {
         return $this->tagResponseCollection($tag);
     }

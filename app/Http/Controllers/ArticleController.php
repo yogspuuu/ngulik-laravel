@@ -15,20 +15,15 @@ use App\Http\Resources\Article\ArticleCollection;
 
 class ArticleController extends Controller
 {
-    protected User $user;
-    protected Article $article;
-    protected ArticleService $articleService;
+    protected $user;
+    protected $article;
+    protected $articleService;
 
     public function __construct(User $user, Article $article, ArticleService $articleService)
     {
         $this->user = $user;
         $this->article = $article;
         $this->articleService = $articleService;
-    }
-
-    public function index(IndexRequest $request): ArticleCollection
-    {
-        return $this->articleResponseCollection($this->article->getFiltered($request->validated()));
     }
 
     public function feed(FeedRequest $request): ArticleCollection

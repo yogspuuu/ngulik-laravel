@@ -7,42 +7,41 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TagController;
 
-Route::get('profiles/{user}', [ProfileController::class, 'show']);
-Route::get('tags', [TagController::class, 'index']);
-Route::get('articles/{article}/comments', [CommentController::class, 'index']);
+
+Route::get('profiles/{user_id}', [ProfileController::class, 'show']);
+Route::get('tags', [TagController::class, 'list']);
 
 Route::prefix('users')->group(function () {
-    Route::post('/', [UserController::class, 'store']);
+    Route::post('store', [UserController::class, 'store']);
     Route::post('login', [UserController::class, 'login']);
 });
 
 Route::prefix('articles')->group(function () {
-    Route::get('/', [ArticleController::class, 'index']);
     Route::get('feed', [ArticleController::class, 'feed']);
     Route::get('{article_id}', [ArticleController::class, 'show']);
+    Route::get('{article_id}/comments', [CommentController::class, 'list']);
 });
 
 Route::middleware('auth')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/', [UserController::class, 'show']);
-        Route::put('/', [UserController::class, 'update']);
+        Route::put('{user_id}', [UserController::class, 'update']);
     });
 
     Route::prefix('profiles')->group(function () {
-        Route::post('{user}/follow', [ProfileController::class, 'follow']);
-        Route::delete('{user}/follow', [ProfileController::class, 'unfollow']);
+        Route::post('{user_id}/follow', [ProfileController::class, 'follow']);
+        Route::delete('{user_id}/follow', [ProfileController::class, 'unfollow']);
     });
 
     Route::prefix('articles')->group(function () {
-        Route::post('/', [ArticleController::class, 'store']);
-        Route::put('{article}', [ArticleController::class, 'update']);
-        Route::delete('{article}', [ArticleController::class, 'destroy']);
-        Route::post('{article}/favorite', [ArticleController::class, 'favorite']);
-        Route::delete('{article}/favorite', [ArticleController::class, 'unfavorite']);
-    });
+        Route::post('store', [ArticleController::class, 'store']);
+        Route::put('{article_id}', [ArticleController::class, 'update']);
+        Route::delete('{article_id}', [ArticleController::class, 'destroy']);
 
-    Route::prefix('articles')->group(function () {
-        Route::post('{article}/comments', [CommentController::class, 'store']);
-        Route::delete('{article}/comments/{comment}', [CommentController::class, 'destroy']);
+        Route::post('{article_id}/favorite', [ArticleController::class, 'favorite']);
+        Route::delete('{article_id}/favorite', [ArticleController::class, 'unfavorite']);
+
+        Route::post('{article_id}/comments', [CommentController::class, 'store']);
+        Route::delete('{article_id}/comments/{comment_id}', [CommentController::class, 'destroy']);
     });
 });
