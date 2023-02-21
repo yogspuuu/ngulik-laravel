@@ -24,12 +24,9 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $user;
-    protected $message;
 
     public function __construct(User $user)
     {
-        $message = config('constant.messages');
-        $this->message = $message;
         $this->user = $user;
     }
 
@@ -64,17 +61,25 @@ class Controller extends BaseController
         return new TagCollection($tag);
     }
 
-    protected function userResponse(string $jwtToken): JsonResponse
+    protected function userResponse(string $jwtToken = null, string $message = null, bool $status = true): JsonResponse
     {
+        if (!$status) {
+            return $this->failed(message: $message);
+        }
+
         $user = auth()->user();
         $user->token = $jwtToken;
         $data = new UserResource($user);
 
-        return $this->success($data, $this->message);
+        return $this->success(data: $data, message: $message);
     }
 
-    protected function success($data = null, $message = null, $status = true, $pagination = null)
-    {
+    protected function success(
+        object|array $data = null,
+        string $message = null,
+        bool $status = true,
+        object|array $pagination = null,
+    ) {
         $responses = [
             'status' => $status,
             'message' => $message,
@@ -83,5 +88,19 @@ class Controller extends BaseController
         ];
 
         return response()->json($responses, Response::HTTP_OK);
+    }
+
+    /**
+     * @param $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function failed(string $message = null, bool $status = false)
+    {
+        $responses = [
+            'status' => $status,
+            'message' => $message
+        ];
+
+        return response()->json($responses, Response::HTTP_BAD_REQUEST);
     }
 }

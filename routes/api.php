@@ -23,7 +23,7 @@ Route::prefix('articles')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::prefix('user')->group(function () {
+    Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'show']);
         Route::put('{user_id}', [UserController::class, 'update']);
     });

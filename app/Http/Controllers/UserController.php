@@ -12,15 +12,19 @@ use Illuminate\Http\Response;
 class UserController extends Controller
 {
     protected $user;
+    protected $message;
 
     public function __construct(User $user)
     {
+        $message = config('constant.messages');
+
+        $this->message = $message;
         $this->user = $user;
     }
 
     public function show(): JsonResponse
     {
-        return $this->userResponse(auth()->getToken()->get());
+        return $this->userResponse(jwtToken: auth()->getToken()->get());
     }
 
     public function store(StoreRequest $request): JsonResponse
@@ -29,22 +33,22 @@ class UserController extends Controller
 
         auth()->login($user);
 
-        return $this->userResponse(auth()->refresh());
+        return $this->userResponse(jwtToken: auth()->refresh(), message: $this->message['user']['store']['success']);
     }
 
     public function update(UpdateRequest $request): JsonResponse
     {
-        auth()->user()->update($request->validated()['user']);
+        auth()->user()->update($request->all());
 
-        return $this->userResponse(auth()->getToken()->get());
+        return $this->userResponse(jwtToken: auth()->getToken()->get());
     }
 
     public function login(LoginRequest $request): JsonResponse
     {
-        if ($token = auth()->attempt($request->validated()['user'])) {
-            return $this->userResponse($token);
+        if ($token = auth()->attempt($request->all())) {
+            return $this->userResponse(jwtToken: $token, message: $this->message['user']['auth']['success']);
         }
 
-        abort(Response::HTTP_FORBIDDEN);
+        return $this->userResponse(message: $this->message['user']['auth']['failed'], status: false);
     }
 }
