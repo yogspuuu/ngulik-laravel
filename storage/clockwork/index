@@ -1,1 +1,16 @@
 1677013996-5171-1170165412,1677013996.5086,POST,/api/users/store,"App\Http\Controllers\UserController@store",422,25.959014892578,request
+1677015201-1168-1954096272,1677015201.0935,POST,/api/users/store,"App\Http\Controllers\UserController@store",422,44.85011100769,request
+1677015258-3450-669680985,1677015258.3259,POST,/api/users/store,"App\Http\Controllers\UserController@store",422,54.331064224243,request
+1677015279-6975-1706540069,1677015279.6941,POST,/api/users/store,"App\Http\Controllers\UserController@store",500,21.963834762573,request
+1677015292-3905-1196561326,1677015292.3843,POST,/api/users/store,"App\Http\Controllers\UserController@store",500,22.461175918579,request
+1677015302-8023-641141780,1677015302.7945,POST,/api/users/store,"App\Http\Controllers\UserController@store",500,29.020071029663,request
+1677015325-3041-783139071,1677015325.3005,POST,/api/users/store,"App\Http\Controllers\UserController@store",500,83.415031433105,request
+1677015355-1214-1421951506,1677015355.118,POST,/api/users/store,"App\Http\Controllers\UserController@store",422,17.695903778076,request
+1677015363-0249-1847934448,1677015363.016,POST,/api/users/store,"App\Http\Controllers\UserController@store",201,121.10590934753,request
+1677015445-8963-983875510,1677015445.891,POST,/api/users/store,"App\Http\Controllers\UserController@store",500,84.281921386719,request
+1677015631-7333-381908898,1677015631.7287,POST,/api/users/store,"App\Http\Controllers\UserController@store",201,79.74910736084,request
+1677015754-4357-215110372,1677015754.4313,POST,/api/users/store,"App\Http\Controllers\UserController@store",201,83.868026733398,request
+1677016213-9667-989006817,1677016213.9415,POST,/api/users/store,"App\Http\Controllers\UserController@store",422,104.69794273376,request
+1677017240-8599-1906433911,1677017240.792,POST,/api/users/store,"App\Http\Controllers\UserController@store",422,217.91481971741,request
+1677017429-4810-1035172917,1677017429.4432,POST,/api/users/store,"App\Http\Controllers\UserController@store",422,126.0290145874,request
+1677017442-0321-908334420,1677017442.022,POST,/api/users/store,"App\Http\Controllers\UserController@store",200,143.29409599304,request

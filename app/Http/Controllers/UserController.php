@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Htpp\Resource\User\UserResource;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -18,28 +18,28 @@ class UserController extends Controller
         $this->user = $user;
     }
 
-    public function show(): UserResource
+    public function show(): JsonResponse
     {
         return $this->userResponseJson(auth()->getToken()->get());
     }
 
-    public function store(StoreRequest $request): UserResource
+    public function store(StoreRequest $request): JsonResponse
     {
-        $user = $this->user->create($request->validated()['user']);
+        $user = $this->user->create($request->all());
 
         auth()->login($user);
 
         return $this->userResponseJson(auth()->refresh());
     }
 
-    public function update(UpdateRequest $request): UserResource
+    public function update(UpdateRequest $request): JsonResponse
     {
         auth()->user()->update($request->validated()['user']);
 
         return $this->userResponseJson(auth()->getToken()->get());
     }
 
-    public function login(LoginRequest $request): UserResource
+    public function login(LoginRequest $request): JsonResponse
     {
         if ($token = auth()->attempt($request->validated()['user'])) {
             return $this->userResponseJson($token);

@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Htpp\Resource\User;
+namespace App\Http\Resources\User;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {
-    public static $wrap = 'user';
-
     public function toArray($request)
     {
         return [
-            'user' => $this->user,
-            'token' => $this->user->token
+            "id" => $this->id,
+            "username" => $this->username,
+            "email" => $this->email,
+            "updated_at" => $this->updated_at,
+            "created_at" => $this->created_at,
+            'bearer' => $this->token
         ];
     }
 }
