@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function show(): JsonResponse
     {
-        return $this->userResponseJson(auth()->getToken()->get());
+        return $this->userResponse(auth()->getToken()->get());
     }
 
     public function store(StoreRequest $request): JsonResponse
@@ -29,20 +29,20 @@ class UserController extends Controller
 
         auth()->login($user);
 
-        return $this->userResponseJson(auth()->refresh());
+        return $this->userResponse(auth()->refresh());
     }
 
     public function update(UpdateRequest $request): JsonResponse
     {
         auth()->user()->update($request->validated()['user']);
 
-        return $this->userResponseJson(auth()->getToken()->get());
+        return $this->userResponse(auth()->getToken()->get());
     }
 
     public function login(LoginRequest $request): JsonResponse
     {
         if ($token = auth()->attempt($request->validated()['user'])) {
-            return $this->userResponseJson($token);
+            return $this->userResponse($token);
         }
 
         abort(Response::HTTP_FORBIDDEN);

@@ -64,7 +64,7 @@ class Controller extends BaseController
         return new TagCollection($tag);
     }
 
-    protected function userResponseJson(string $jwtToken): JsonResponse
+    protected function userResponse(string $jwtToken): JsonResponse
     {
         $user = auth()->user();
         $user->token = $jwtToken;
